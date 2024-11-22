@@ -24,7 +24,7 @@ class DbHelper {
     return _database;
   }
 
-  Future<Database?> await _initDb(){
+  Future<Database?> _initDb() async{
     String databasePath = await getDatabasesPath();
     String path = join(databasePath, 'kontak.db');
 
@@ -62,21 +62,29 @@ class DbHelper {
         columnMobileNum,
         columnEmail,
         columnCompany,
-      ]
+      ].toList()
     );
-    return result.toList();
+    return result;
   }
 
   // update
-  Future<int?> updateKontak() async{
+  Future<int?> updateKontak(Kontak kontak) async{
     var dbClient = await _db;
     return await dbClient!.update(
       tableName, 
       kontak.toMap(),
       where: '$columnId = ?',
-      whereArgs: ['kontak.id'];
+      whereArgs: ['kontak.id']
     );
   }
 
-  
+  // delete
+  Future<int?> deleteKontak(int id) async{
+    var dbClient = await _db;
+    return await dbClient!.delete(
+      tableName,
+      where: '$columnId = ?',
+      whereArgs: ['kontak.id']
+    );
+  }
 }
