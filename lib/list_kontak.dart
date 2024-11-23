@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:contacs_app/database/db_helper.dart';
 import 'package:contacs_app/model/kontak.dart';
+import 'package:contacs_app/form_kontak.dart';
 
 class ListKontakPage extends StatefulWidget {
-  const ListKontakPage({Key? key}): super(key: key);
+  const ListKontakPage({Key? key}) : super(key: key);
 
   @override
-  State<ListKontakPage> createState() => _ListKontakPageState();
+
+  _ListKontakPageState createState() => _ListKontakPageState();
 }
 
 class _ListKontakPageState extends State<ListKontakPage> {
 
   List<Kontak> listKontak = [];
   DbHelper db = DbHelper();
+
+  @override
+  void initState(){
+    _getAllKontak();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +37,8 @@ class _ListKontakPageState extends State<ListKontakPage> {
           return Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
-              side: BorderSide(
-                color: const Color(0xFFFFFFFFF),
+              side: const BorderSide(
+                color: Color(0xFFFFFFFFF),
                 width: 3,
               )
             ),
@@ -139,9 +147,21 @@ class _ListKontakPageState extends State<ListKontakPage> {
     );
   }
 
+  Future<void> _getAllKontak() async{
+    var list = await db.getAllKontak();
+
+    setState((){
+      listKontak.clear();
+
+      for(var kontak in list!){
+        listKontak.add(Kontak.fromMap(kontak));
+      }
+    });
+  }
+
   // get data kontak
   // delete
-  Future<void> _deleteKontak(Kontak kontak, int position){
+  Future<void> _deleteKontak(Kontak kontak, int position) async{
     await db.deleteKontak(kontak.id!);
     setState((){
       listKontak.removeAt(position);
@@ -161,7 +181,7 @@ class _ListKontakPageState extends State<ListKontakPage> {
   // edit
   Future<void> _openFormEdit(Kontak kontak) async{
     var result = await Navigator.push(
-      context, MaterialPageRoute(builder: (context) => const FormKontak(kontak: kontak))
+      context, MaterialPageRoute(builder: (context) => FormKontak(kontak: kontak))
     );
     if (result == 'update'){
       await _getAllKontak();

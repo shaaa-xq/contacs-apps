@@ -1,17 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:contacs_app/form_kontak.dart';
-import 'package:contacs_app/database/db_helper.dart';
-import 'package:contacs_app/model/kontak.dart';
+import 'package:contacs_app/list_kontak.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart' as sqflite_ffi;
 
 void main() {
-  runApp(const MainApp());
+  runApp(const ContactsApp());
+
+  sqflite_ffi.sqfliteFfiInit();
 }
 
-class contacsApp extends StatelessWidget {
-  const contacsApp({super.key});
+class ContactsApp extends StatelessWidget {
+  const ContactsApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Contacs Apps',
+      theme: ThemeData(
+        useMaterial3: false, 
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.red
+        ),
+      ),
+      home: const ListKontakPage(),
+    );
   }
 }

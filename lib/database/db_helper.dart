@@ -36,11 +36,11 @@ class DbHelper {
   }
 
   Future<void> _onCreate(Database db, int version) async{
-    var sql = "CREATE TABLE $tableName $columnId INTEGER PRIMARY KEY, "
+    var sql = "CREATE TABLE $tableName($columnId INTEGER PRIMARY KEY, "
       "$columnName TEXT"
       "$columnMobileNum TEXT"
       "$columnEmail TEXT"
-      "$columnCompany TEXT";
+      "$columnCompany TEXT)";
 
     await db.execute(sql);
   }
@@ -84,7 +84,7 @@ class DbHelper {
     return await dbClient!.delete(
       tableName,
       where: '$columnId = ?',
-      whereArgs: ['kontak.id']
+      whereArgs: ['id']
     );
   }
 }
