@@ -1,11 +1,18 @@
+import 'package:contacs_app/database/db_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:contacs_app/list_kontak.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart' as sqflite_ffi;
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-void main() {
+Future<void> main() async{
+  await WidgetsFlutterBinding.ensureInitialized();
+  await DbHelper();
   runApp(const ContactsApp());
 
-  sqflite_ffi.sqfliteFfiInit();
+  sqfliteFfiInit();
+
+  databaseFactory = databaseFactoryFfi;
+  
+  runApp(ContactsApp());
 }
 
 class ContactsApp extends StatelessWidget {
