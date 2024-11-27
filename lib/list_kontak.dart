@@ -99,7 +99,7 @@ class _ListKontakPageState extends State<ListKontakPage> {
                               height: 100,
                               child: Column(
                                 children: [
-                                  Text('Apakah Anda yakin ingin menghapus kontak ${'kontak.name'}?')
+                                  Text('Apakah Anda yakin ingin menghapus kontak ${kontak.name}?')
                                 ],
                               )
                             ),

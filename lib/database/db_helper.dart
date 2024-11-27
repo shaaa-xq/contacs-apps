@@ -25,8 +25,8 @@ class DbHelper {
   }
 
   Future<Database?> _initDb() async{
-    String databasePath = await getDatabasesPath();
-    String path = join(databasePath, 'kontak.db');
+    final databasePath = await getDatabasesPath();
+    final path = join(databasePath, 'kontak.db');
 
     return await openDatabase(
       path, 

@@ -36,3 +36,4 @@ class Kontak{
     company = map['company'];
   }
 }
+
